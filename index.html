@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+<link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto|Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="social-buttons.css">
+<link rel="stylesheet" href="tonyp.css">
+
+<body>
+    <script>
+        //The DOM is loaded, let's set up the page logic.
+        var activeCarouselImage = 6;
+
+        $().ready(function() {
+
+            //-----------------Set up the navigation and initial view-----------------
+            //Check for a navigation parameter in the querystring so that we can load the right page.
+            var _href = window.location.href;
+            var navlocation = _href.slice(_href.indexOf("#") + 1);
+
+            //Show the active article, and hide everything else.
+            var switchpage = function(pagename) {
+                $("article:not(." + pagename + ")").hide();
+                $("." + pagename).show();
+                $("header ul li a").removeClass("selected");
+                $("a[data-article=" + navlocation + "]").addClass('selected');
+                if (pagename == "gallery") {
+                    setup_carousel();
+                }
+            }
+
+            //When a nav item is clicked, display only the corresponding article.
+            $("header ul li a").click(function() {
+                navlocation = $(this).data("article");
+                switchpage($(this).data("article"));
+            });
+
+            //IF this is the first page load, display the "About Me" section
+            //Otherwise, display the active article
+            if (navlocation.length > 0) {
+                switchpage(navlocation);
+            } else {
+                switchpage("aboutme");
+            }
+            //-----------------End navigation/view setup-----------------
+
+
+            //-----------------Social Media Links-----------------
+
+            //set up social media URLs
+            var GooglePlus = "https://plus.google.com/u/1/105097489131479608646/"
+            var theFacebook = "https://www.facebook.com/dolphinteeth";
+            var LinkedIn = "https://www.linkedin.com/profile/view?id=26720543";
+            var Twitter = "https://twitter.com/ctonyp";
+
+            //Click functions for the social media buttons
+            $(".fa-twitter").click(function() {
+                window.location.href = Twitter;
+            });
+            $(".fa-facebook").click(function() {
+                window.location.href = theFacebook;
+            });
+            $(".fa-google-plus").click(function() {
+                window.location.href = GooglePlus;
+            });
+            $(".fa-linkedin").click(function() {
+                window.location.href = LinkedIn;
+            });
+            //-----------------End Social Media-----------------
+
+            //-----------------End Ready Function-----------------
+        });
+
+        function setup_carousel() {
+            //If the carousel has images, then it's already been setup and we dont need to do anything
+            if ($(".carousel img").length < 2) {
+                //Hide the carousel buttons, we will make them visible on mouseenter/leave.
+
+
+                //-----------------Begin Carousel Code-----------------
+                //Define the images that we want to load into the carousel.
+                var CarouselImages = ["long distance selfie.jpg", "Eva BIPE.jpg", "f550.jpg", "hexa.jpg", "hquad.jpg", "opq.jpg"];
+                var ImageCaptions = ["Long Distance Selfie", "Mountain Models EVA Biplane", "DJI F-550", "Tarot FY680 Hexacopter (Bananagrams for reference)", "Alien H-Quad", "One Piece Quad - A Great Quad for bashing."];
+                //Add each image to the carousel
+                for (x = 0; x < CarouselImages.length; x++) {
+                    $(".carousel").prepend('<span>' + ImageCaptions[x] + '</span>');
+                    $(".carousel").prepend('<img src="' + 'images/' + CarouselImages[x] + '" />');
+
+                }
+                $(".carousel button").hide();
+                $(".carousel span").hide();
+
+                //When a carousel button has been clicked
+                $(".carousel button").click(function() {
+                    //Hide all the images in the carousel.
+                    $(".carousel img").hide();
+                    $(".carousel span").hide();
+                    //move the active image pointer up or down according to what carousel button was clicked
+                    switch ($(this).data("command")) {
+                        case "previous":
+                            activeCarouselImage--;
+                            break;
+
+                        case "next":
+                            activeCarouselImage++;
+                            break;
+                    }
+                    //If the active image pointer was moved outside the range of images, wrap it around.
+                    if (activeCarouselImage > CarouselImages.length) {
+                        activeCarouselImage = 1;
+                    }
+                    if (activeCarouselImage < 1) {
+                        activeCarouselImage = CarouselImages.length;
+                    }
+
+                    //Show the new active carousel image.
+                    $(".carousel img:nth-of-type(" + activeCarouselImage + ")").show();
+                    $(".carousel span:nth-of-type(" + activeCarouselImage + ")").show();
+                    $(".carousel").css("width", $(".carousel img:nth-of-type(" + activeCarouselImage + ")").width());
+
+                });
+
+                $(".carousel").mouseenter(function() {
+                    $(".carousel button").show();
+                });
+                $(".carousel").mouseleave(function() {
+                    $(".carousel button").hide();
+                });
+                $(".carousel img:nth-of-type(" + activeCarouselImage + ")").show();
+                $(".carousel span:nth-of-type(" + activeCarouselImage + ")").show();
+            }
+        }
+         //-----------------End Carousel Code-----------------
+    </script>
+    <header>
+        <img src="images/headshot.png">
+        <h1>Tony Perry</h1>
+        <ul>
+            <li data-article="aboutme"><a data-article="aboutme" href="#aboutme" class="selected">About Me</a>
+            </li>
+            <li data-article="interests"><a data-article="interests" href="#interests">Interests</a>
+            </li>
+            <li data-article="gallery"><a data-article="gallery" href="#gallery">Gallery</a>
+            </li>
+        </ul>
+    </header>
+    <article class="aboutme">
+        <div class="nametag">
+            <h1>Hello</h1>
+            <h4>my name is</h4>
+            <span>Tony Perry</span>
+        </div>
+        </span>
+        <p> <span>
+            <span class="nametagalt">Hello, my name is Tony Perry. </span>I have been involved in technology for 20 years. I've worked in Technical Support, Quality Assurance and as a technical consultant doing IT Management and software development.
+        </p>
+        <p>I am the sort of person who loves to know how things work. I was the kid who took his toys apart to try to figure out how they worked and to try to come up with other uses for their parts. I've always enjoyed programming and developing software.
+            <br/>Aside from some Pascal that I learned in a long-forgotten Computer Science class I am completely self-taught.
+        </p>
+    </article>
+    <article class="interests">
+        <div class="photo-right">
+            <img class="skywalker" src="images/skywalker.jpg"><span>Taking the Skywalker out on a beautiful day in Alameda.</span>
+        </div>In addition to technical pursuits, I am absolutely obsessed with R/C aircraft. I design, build and fly R/C airplanes, helicopters and mulirotors (some people call them drones).
+        <div class="photo-left">
+            <img class="trex" src="images/trex450.jpeg">
+            <br/>My Align T-Rex 450 (RIP)</div>I took up the hobby after I moved to the Bay Area in 2011 because I wanted to find a hobby that challenged and stimulated me. Chances are that, if I have some free time I'm either out flying or working on a craft at home.
+    </article>
+    <article class="gallery">
+        <div class="carousel">
+            <br/>
+            <button class="prevbutton glyphicon glyphicon-chevron-left" data-command="previous"></button>
+            <button class="nextbutton glyphicon glyphicon-chevron-right" data-command="next"></button>
+        </div>
+    </article>
+    <footer>
+        <div class="contactinfo">Tony Perry
+            <br/>ctonyperry@gmail.com
+            <br/>775-229-0327
+            <br/>
+            <!-- Social Media Buttons -->
+            <button class="btn btn-twitter"><i class="fa fa-twitter"></i>
+            </button>
+            <button class="btn btn-facebook"><i class="fa fa-facebook"></i>
+            </button>
+            <button class="btn btn-google-plus"><i class="fa fa-google-plus"></i>
+            </button>
+            <button class="btn btn-linkedin"><i class="fa fa-linkedin"></i>
+            </button>
+            <!-- End Social Media Buttons -->
+        </div>
+    </footer>
+</body>
+
+</html>
