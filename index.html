@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html><head>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
-<link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto|Gloria+Hallelujah' rel='stylesheet' type='text/css'>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-<link rel="stylesheet" href="social-buttons.css">
-<link rel="stylesheet" href="tonyp.css">
+<html>
+
+<head>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.1/normalize.min.css">
+    <link href='http://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto|Gloria+Hallelujah' rel='stylesheet' type='text/css'>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="social-buttons.css">
+    <link rel="stylesheet" href="tonyp.css">
 </head>
+
 <body>
     <script>
         //The DOM is loaded, let's set up the page logic.
@@ -20,10 +23,10 @@
             //-----------------Set up the navigation and initial view-----------------
             //Check for a navigation parameter in the querystring so that we can load the right page.
             var _href = window.location.href;
-            var navlocation ="aboutme";
-			if(_href.indexOf("#")>0){
-			navlocation = _href.slice(_href.indexOf("#") + 1);
-			}
+            var navlocation = "aboutme";
+            if (_href.indexOf("#") > 0) {
+                navlocation = _href.slice(_href.indexOf("#") + 1);
+            }
             //Show the active article, and hide everything else.
             var switchpage = function(pagename) {
                 $("article:not(." + pagename + ")").hide();
